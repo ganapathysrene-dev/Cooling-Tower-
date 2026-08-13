@@ -1,0 +1,25 @@
+{
+  "name": "Cooling Tower Performance - ASHRAE Ch. 40",
+  "short_name": "Cooling Tower",
+  "description": "Merkel demand, off-design approach, water balance and fan affinity calculators.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3efe4",
+  "theme_color": "#12211d",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22%2312211d%22/%3E%3Cpath%20d%3D%22M150%20400%20L185%20190%20L327%20190%20L362%20400%20Z%22%20fill%3D%22none%22%20stroke%3D%22%232f6f7e%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M196%20130%20Q216%20100%20236%20130%20T276%20130%20T316%20130%22%20fill%3D%22none%22%20stroke%3D%22%235fa8b5%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22/%3E%3Cline%20x1%3D%22176%22%20y1%3D%22285%22%20x2%3D%22336%22%20y2%3D%22285%22%20stroke%3D%22%23b6613a%22%20stroke-width%3D%2220%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22%2312211d%22/%3E%3Cpath%20d%3D%22M150%20400%20L185%20190%20L327%20190%20L362%20400%20Z%22%20fill%3D%22none%22%20stroke%3D%22%232f6f7e%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M196%20130%20Q216%20100%20236%20130%20T276%20130%20T316%20130%22%20fill%3D%22none%22%20stroke%3D%22%235fa8b5%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22/%3E%3Cline%20x1%3D%22176%22%20y1%3D%22285%22%20x2%3D%22336%22%20y2%3D%22285%22%20stroke%3D%22%23b6613a%22%20stroke-width%3D%2220%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
