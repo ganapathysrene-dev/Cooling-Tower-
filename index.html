@@ -148,7 +148,10 @@
         <svg id="approach-chart" width="100%" height="340" viewBox="0 0 800 340"></svg>
       </div>
       <div class="chart-box" style="margin-top: 20px;">
-        <div class="chart-title">Approach vs wet-bulb — data table</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div class="chart-title" style="margin-bottom: 0;">Approach vs wet-bulb — data table</div>
+          <button id="export-csv-btn" class="export-btn no-print" style="padding: 7px 14px; font-size: 12px;">⭳ Export CSV</button>
+        </div>
         <div style="max-height: 320px; overflow-y: auto;">
           <table>
             <thead><tr><th id="approach-table-wb-th">Entering wet-bulb (°C)</th><th id="approach-table-ap-th">Approach (°C)</th><th id="approach-table-cw-th">Cond. entering water (°C)</th></tr></thead>
@@ -681,6 +684,42 @@
     document.getElementById('approach-chart-unit').addEventListener('change', () => updateApproach());
 
     let sharedKaVL = null; // Required KaV/L computed on the Merkel tab; feeds the Approach tab
+    let lastApproachExport = null; // snapshot of the approach table for CSV export
+
+    // CSV export — opens directly in Excel. A BOM is prepended so Excel reads it
+    // as UTF-8 and renders the ° symbol correctly instead of mojibake.
+    document.getElementById('export-csv-btn').addEventListener('click', () => {
+      if (!lastApproachExport || !lastApproachExport.rows.length) {
+        alert('No data to export — the current Merkel operating point is infeasible.');
+        return;
+      }
+      const e = lastApproachExport;
+      const u = e.unit;
+      const lines = [];
+      lines.push('Cooling Tower - Approach vs Entering Wet-Bulb');
+      lines.push('Generated,' + new Date().toISOString().slice(0, 19).replace('T', ' '));
+      lines.push('');
+      lines.push('Operating conditions (from Merkel tab)');
+      lines.push('Tower KaV/L,' + (e.kavl !== null ? e.kavl.toFixed(3) : 'n/a'));
+      lines.push('Range (' + u + '),' + e.range.toFixed(2));
+      lines.push('L/G ratio,' + e.lg.toFixed(2));
+      lines.push('');
+      lines.push(['Entering wet-bulb (' + u + ')', 'Approach (' + u + ')', 'Cond. entering water (' + u + ')'].join(','));
+      e.rows.forEach(r => {
+        lines.push([r.wb.toFixed(2), r.approach.toFixed(2), r.coldWater.toFixed(2)].join(','));
+      });
+
+      const csv = '\ufeff' + lines.join('\r\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'approach-vs-wetbulb.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
 
     function getInputs() {
       const flowVal = parseFloat(document.getElementById('flow-input').value) || 0;
@@ -753,6 +792,7 @@
         warnBox.appendChild(div);
         document.getElementById('approach-chart').innerHTML = '';
         document.getElementById('approach-table').innerHTML = '';
+        lastApproachExport = null;
         return;
       }
 
@@ -801,6 +841,15 @@
         tr.innerHTML = '<td>' + d.wb.toFixed(2) + '</td><td>' + d.approach.toFixed(2) + '</td><td>' + d.coldWater.toFixed(2) + '</td>';
         tableBody.appendChild(tr);
       });
+
+      // Keep a snapshot for CSV export so the file always matches what's on screen
+      lastApproachExport = {
+        unit: chartUnit,
+        kavl: sharedKaVL,
+        range: convertDiffDisplay(inp.range, chartUnit),
+        lg: inp.LG,
+        rows: data,
+      };
     }
 
     function updateWater() {
