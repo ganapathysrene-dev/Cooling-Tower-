@@ -4,7 +4,7 @@
 // IMPORTANT: bump CACHE_VERSION whenever you publish an updated index.html —
 // otherwise phones that already installed the app will keep serving the old
 // cached copy and never see your changes.
-const CACHE_VERSION = 'cooling-tower-v2';
+const CACHE_VERSION = 'cooling-tower-v3';
 
 const ASSETS = [
   './',
